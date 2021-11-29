@@ -1,0 +1,820 @@
+@import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Martel+Sans:wght@200;300;400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Righteous&display=swap');
+/*
+    1- font-family: 'Julius Sans One', sans-serif;
+    2- font-family: 'Martel Sans', sans-serif;
+    font-family: 'Comfortaa', cursive;
+    font-family: 'Righteous', cursive;
+*/
+
+*, html, body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*******************************
+        ESTILOS GERAIS 
+*******************************/
+body{
+    background: #E9E9E9;
+    font-family: 'Martel Sans', sans-serif;
+}
+
+ul li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none !important;
+}
+
+p{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.opac-1{
+    opacity: 1;
+}
+
+/******************************* 
+        HR ESTILIZADOS
+*******************************/
+.hr{
+    width: 100% !important;
+    height: 8px !important;
+    margin: 20px auto !important;
+    border: none;
+}
+
+.s-hr{
+    width: 100% !important;
+    height: 2px !important;
+    margin: 20px auto !important;
+    border: none;
+}
+
+/*******************************
+        PARA ICONES
+*******************************/
+.t-icon{
+    width: 32px;
+    height: 32px;
+}
+
+.s-icon{
+    width: 26px;
+    height: 26px;
+}
+
+/*******************************
+            PARA DIVS
+*******************************/
+.full{
+    width: 100%;
+    height: 100%;
+}
+
+.input-min{
+    max-width: 200px;
+}
+
+.bord-d{
+    border-left: 2px solid #123123;
+    border-right: 2px solid #213413;
+}
+
+.te-0{
+    top: 0;
+    left: 0;
+}
+
+.sair{
+    top: 20px;
+    left: 20px;
+}
+
+.banner-roxo{
+    height: 100vh;
+    background: url(../img/banner-roxo.png);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.banner-azul{
+    height: 100vh;
+    background: url(../img/banner-azul.png);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.banner-total{
+    height: 100vh;
+    background: url(../img/banner-total.png);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.banner-escuro{
+    background: url(../img/banner-escuro.png);
+    height: 100vh;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.radius{
+    border-radius: 8px 0 0 8px !important;
+}
+
+.full-radius{
+    border-radius: 50%;
+}
+
+.radius-btn{
+    border-radius: 8px 0 8px 0 !important;
+}
+
+/*******************************
+        PARA IMAGENS
+*******************************/
+.d200{
+    max-width: 80%;
+    max-height: 250px;
+}
+
+/*******************************
+        PARA INPUTS
+*******************************/
+.form-escuro:focus{
+    border: 2px solid #050510 !important;
+    box-shadow: none !important;
+}
+
+.form-escuro{
+    border: 0;
+    border: 2px solid #050510 !important;
+    box-shadow: 4px 4px #050510 !important;
+}
+
+/* PARA AZUL CLARO */
+.form-azul:focus{
+    border: 2px solid #00a3d5 !important;
+    box-shadow: none !important;
+}
+
+.form-azul{
+    border: 0;
+    border: 2px solid #00a3d5 !important;
+    box-shadow: 4px 4px #00a3d5 !important;
+}
+
+/* PARA VERDE */
+.form-roxo:focus{
+    border: 2px solid #8025ca !important;
+    box-shadow: none !important;
+}
+
+.form-roxo{
+    border: 0;
+    border: 2px solid #8025ca !important;
+    box-shadow: 4px 4px #8025ca !important;
+}
+
+/*******************************
+        PARA FONTES
+*******************************/
+.font-conforta{
+    font-family: 'Comfortaa', cursive;
+}
+
+.font-martel{
+    font-family: 'Martel Sans', sans-serif;
+}
+
+.font-julius{
+    font-family: 'Julius Sans One', sans-serif;
+}
+
+
+/*******************************
+    TAMANHO DAS FONTES
+*******************************/
+.fs-sm{
+    font-size: 1.2rem !important;
+}
+
+.fs-ss{
+    font-size: 0.8rem !important;
+}
+
+/*******************************
+    BACKGROUNDS E COLORS 
+*******************************/
+.transparent{
+    background: transparent;
+}
+
+.bg-branco{
+    background: #FFF !important;
+}
+
+.color-branco{
+    color: white !important;
+}
+
+.bg-cinza{
+    background: #E9E9E9 !important;
+}
+
+.bg-cinza-escuro{
+    background: #333 !important;
+}
+
+.color-cinza-escuro{
+    color: #333 !important;
+}
+
+.bg-laranja{
+    background: #ffc935 !important;
+}
+
+.color-laranja{
+    color: #ffcc3e !important;
+}
+
+.bg-azul-escuro{
+    background: #050510 !important;
+}
+
+.color-azul-escuro{
+    color: #050510 !important;
+}
+
+.bg-azul{
+    background: #00a3d5 !important;
+}
+
+.bg-a-linear{
+    background: linear-gradient(20deg, #00a3d5, #FFF, #00a3d5);
+}
+
+.color-azul{
+    color: #00a3d5 !important;
+}
+
+.bg-roxo{
+    background: #8025ca !important;
+}
+
+.bg-r-linear{
+    background: linear-gradient(20deg, #8025ca, #FFF, #8025ca);
+}
+
+.color-roxo{
+    color: #8025ca !important;
+}
+
+.bg-verde{
+    background-color: #2FA61F;
+}
+
+.color-verde{
+    color: #2FA61F;
+}
+
+.bg-vermelho{
+    background: #BA1C1C !important;
+}
+
+.color-vermelho{
+    color: #BA1C1C !important;
+}
+
+/*****************************************
+CLASSES PARA A PÁGINA DE PERFIL DO USUÁRIO 
+******************************************/
+.perfil-image{
+    width: 100px;
+    height: 100px;
+    border: 3px solid #FFF;
+}
+
+.perfil-image-float{
+    width: 35px;
+    height: 35px;
+    border: 3px solid #FFF;
+
+    right: -10px;
+    top: 0;
+}
+
+.perfil-radius{
+    border-radius: 0 0 30px 30px;
+}
+
+.editar-perfil{
+    width: 100%;
+    height: 50px;
+}
+
+
+/********************************/
+#container{
+    height: 250px;
+}
+/********************************/
+.ui-loader{
+    display: none;
+}
+
+.ui-icon-loading{
+    display: none;
+}
+
+#map{
+    width: 100%;
+    height: 100vh;
+}
+
+/**************************
+Testes da pagina de comprar
+***************************/
+.disponiveis{
+    background: #21BD59;
+}
+
+.ocupados{
+  background: #22c6c9e5;
+}
+
+.buscov{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.322);
+    width: 100px;
+}
+.buscov2{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.322);
+    width: 200px;
+}
+.cadastreButton{
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    margin-top: 80px;
+    font-weight: normal;
+    border-radius: 5px;
+    background-color: #00a3d5;
+}
+.cadastreButton:visited{
+    color: #fff;
+}
+
+
+/******************************* 
+        SEM CLASSIFICAÇÃO
+*******************************/
+.item{
+    width: 80px;
+    height: 50px;
+    background: green;
+    margin: 5px;
+    border-radius: 15%;
+}
+
+/*.txt{
+    color: #FFF;
+    font-size: 0.7em;
+}
+
+.form-label-1{
+    margin-top: -3rem;
+}
+
+#container{
+    height: 250px;
+}*/
+
+/*******************************
+PARA PAGINA DE STATUS DO TRANSPORTE - USUARIO 
+*******************************/
+.status{
+    background: #fff;
+}
+
+.status-mapa{
+    width: 250px;
+}
+
+.status-rota{
+    background: #21BD59;
+    width: 150px;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.status-rota a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.status-mapa img{
+    width: 100px;
+}
+
+.status-desc{
+    color: #fff;
+    font-size: .8em;
+}
+
+.status-bloco{
+    width: 50px;
+    height: 35px;
+    border-radius: 10px;
+    border-bottom: 2px solid #0A0917;
+}
+
+.status-bloco:hover{
+    filter:grayscale(2);
+}
+.selecionado:active{
+    background: #ffcc3e;
+}
+
+/******************************************
+PARA PÁGINA DE COMPRAS DE PASSAGEM - USUARIO
+********************************************/
+.comprar{
+    width: 200px;
+    background: #ffc935;
+    padding: 10px;
+    font-weight: bold;
+    margin-top: 35px;
+    border-radius: 15px;
+}
+
+.comprar a{
+    text-decoration: none;
+    color: #000;
+}
+
+/*******************************
+    BACKGROUNDS E COLORS 2  
+*******************************/
+.disponiveis{
+    background: #21BD59;
+}
+
+.ocupados{
+    background: #22c6c9;
+}
+
+.buscov{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.322);
+    width: 100px;
+}
+
+.buscov2{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.322);
+    width: 200px;
+}
+
+.cadastreButton{
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    margin-top: 80px;
+    font-weight: normal;
+    border-radius: 5px;
+    background-color: #00a3d5;
+}
+
+.cadastreButton:visited{
+    color: #fff;
+}
+
+
+/**********************************
+    PARA PÁGINA DE ROTA - USUÁRIO
+***********************************/
+#bg-rota{
+    background-image: url('../img/rota.png');
+    background-repeat: no-repeat;
+}
+
+.onibus-rota{
+    width: 100%;
+    padding: 5px 10px 10px 10px;
+    height: 150px;
+    border-radius: 50px 50px 0  0;
+    box-shadow: 0 0 25px 5px
+    rgba(0, 0, 0, 0.10);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.rota-open{
+    transition: all .2s linear;
+    position: absolute;
+    bottom: 0px;
+}
+
+.rota-closed{
+    position: absolute;
+    bottom: -115px;
+    transition: all .2s linear;
+}
+
+#map{
+    width: 100%;
+    height: 100vh;
+}
+
+#rota{
+    overflow: hidden;
+}
+
+.placa-onibus{
+    border-radius: 10px;
+    background-color: rgba(109, 111, 126, 0.4);
+    border: 1px solid #000;
+    font-weight: bolder;
+    padding: 4px 10px;
+    width: 120px;
+}
+
+.placa-top{
+    background:#092079;
+}
+
+/**********************************
+    MENU PRA NÃO SEI O QUE MAS TEM
+***********************************/
+.menu-opts{
+    /*border-radius: 0 0 25px 25px;*/
+    z-index: 99999;
+}
+
+.icons-div{
+    display: flex;
+    align-items: center;
+    padding: .375rem .75rem;
+
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+
+    background: #FFF;
+    color: #212529;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.icon-search{
+    color: var(--clr-white);
+    margin-right: 5px;
+    width: 10px;
+    height: 10px;
+}
+
+/*********************************
+    ESTILOS GERAIS PARA STATUS
+**********************************/
+.ocupado{
+    background: #333;
+}
+
+.s-botao{
+    width: 200px;
+    height: 100px; 
+}
+
+.assentos-list{
+    padding: 10px 100px;
+}
+
+.assentos-list{
+    padding: 10px 100px;
+}
+
+/********************************
+TESTES PARA PARTE DE COMPRAR PASSAGEM
+*******************************/
+.assentos-num {
+    list-style-type: none;
+    margin: 10px 0 0 0;
+    padding: 0;
+}
+
+.assentos-num li {
+    float: left;
+    margin: 0 5px 0 0;
+    width: 50px;
+    height: 40px;
+    position: relative;
+}
+
+.assentos-num label{
+    background: #2FA61F;
+    border-radius: 10px;
+    color: white;
+}
+
+.assentos-num label, .assentos-num input {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.assentos-num input[type="radio"] {
+    opacity: 0.01;
+    z-index: 100;
+}
+
+.assentos-num label {
+    padding: 5px;
+    margin: 1px;
+    border: 1px solid #CCC;
+    cursor: pointer;
+    z-index: 90;
+}
+
+.assentos-num label:hover {
+    background: #ffc935;
+}
+
+
+
+.item{
+    width: 80px;
+    height: 50px;
+    background: green;
+    margin: 5px;
+    border-radius: 15%;
+}
+
+.color-vermelho{
+    color: #BA1C1C;
+}
+
+.txt{
+    color: #FFF;
+    font-size: 0.7em;
+}
+
+.form-label-1{
+    margin-top: -3rem;
+}
+
+/**********************************
+
+***********************************/
+#rota{
+    overflow: hidden;
+}
+.inputs{
+    width: 200px;
+}
+.header img{
+    width: 250px;
+}
+.inputs button{
+    transition: all .2s linear;
+}
+.options a{
+    width: 200px;
+    font-size: .9em;
+}
+
+.user-img{
+    width: 40px;
+}
+.menu-btn{
+    width: 30px;
+}
+
+.username{
+    color: #fff;
+}
+
+.opt{
+    text-align: center;
+    min-width: 60%;
+    max-width: 60%;
+    font-size: 1em;
+}
+
+.title h5{
+    color: rgb(124, 124, 124);
+}
+.title hr{
+    width: 50%;
+    height: 2px;
+    margin: auto;
+}
+.menu-opts{
+    /*border-radius: 0 0 25px 25px;*/
+    z-index: 99999;
+}
+
+.icons-div{
+    display: flex;
+    align-items: center;
+    padding: .375rem .75rem;
+
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+
+    background: #FFF;
+    color: #212529;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.icon-search{
+    color: var(--clr-white);
+    margin-right: 5px;
+    width: 10px;
+    height: 10px;
+}
+
+.bottom{
+    position: absolute;
+    bottom: 0;
+}
+
+/*********************************
+    ESTILOS GERAIS PARA STATUS
+**********************************/
+.status-bloco{
+    width: 50px;
+    height: 35px;
+    border-radius: 10px;
+    border-bottom: 2px solid #0A0917;
+}
+.status-bloco:hover{
+    filter:grayscale(2);
+}
+.selecionado:active{
+    background: #ffcc3e;
+}
+
+.ocupado{
+    background: #333;
+}
+
+.rodape{
+    width: 100%;
+    height: 60px;
+}
+
+.s-botao{
+    width: 200px;
+    height: 100px; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

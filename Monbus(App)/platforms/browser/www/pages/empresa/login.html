@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    
+    <title>Monbus</title>
+</head>
+<body>
+    <header class="header">
+        <div class="container mx-auto">
+            <img src="../../img/logo2.png" class="mx-auto mt-5 d-block animate__animated animate__fadeInLeft" alt="Logo Buscov">
+            <p class="text-center fs-4 buscov2 mx-auto">Monbus empresas</p>
+        </div>
+    </header>
+    <main class="container-fluid">
+        <div class="inputs mx-auto flex-column d-flex justify-content-center">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" placeholder="Email" id="email-empresa">
+            <label for="pass" class="form-label">Senha:</label>
+            <input type="password" class="form-control" placeholder="Senha" id="senha-empresa">
+            <p class="aviso text-center bg-danger mt-2 rounded" id="aviso"></p>
+            <button class="btn fs-5 rounded-3 btn-primary mt-4 loginButton" id="loginButton">Login</button>
+            <div class="options">
+                <div class="text-center d-flex flex-column">
+                <a href="./cadastro.html" class="cadastreButton">Cadastre-se</a>
+                <!--
+                <a href="esqueceu_senha/esqueceu.html" class="fw-lighter pt-3">Esqueceu a senha?</a>
+                -->
+                </div>
+                <a href="../../index.html" class="btn btn-success mt-3 mb-3">Login para usuarios</a>
+            </div>
+        </div>
+        
+    </main>
+
+</body>
+<script>
+    $(document).ready(function() {
+        var url = "http://localhost/php-buscov/empresa/login.php";
+        $("#loginButton").click(function(){
+            var emailEmpresa = $.trim($("#email-empresa").val());
+            var senhaEmpresa = $.trim($("#senha-empresa").val());
+            var loginString = "email-empresa=" + emailEmpresa + "&senha-empresa=" + senhaEmpresa + "&loginButton=";
+            $.ajax({
+                    type: "POST",
+                    crossDomain: true, 
+                    cache: false,
+                    url: url,
+                    data: loginString,
+                    success: function(data){
+                        if($.trim(data) == "success") {
+                            //guardar que o usuario tá logado
+                            localStorage.loginstatus = "true";
+                            window.location.href = "principal.html?emailEmpresa="+emailEmpresa;
+                            let bus = document.querySelector('#bus');
+                            bus.classList.remove('animate__fadeInLeft');
+                            bus.classList.add('animate__fadeOutRight');
+                        }
+
+                        else{
+                            $("#aviso").text("Usuário Incorreto..!");
+
+                        }
+                    }
+                });
+            })
+        });
+</script>
+</html>

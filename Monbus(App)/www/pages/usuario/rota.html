@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../css/bootstrap-grid.min.css">
+	<link rel="stylesheet" href="../../css/bootstrap-grid.rtl.min.css">
+	<link rel="stylesheet" href="../../css/bootstrap-reboot.min.css">
+	<link rel="stylesheet" href="../../css/bootstrap-reboot.rtl.min.css">
+	<link rel="stylesheet" href="../../css/bootstrap-utilities.min.css">
+	<link rel="stylesheet" href="../../css/bootstrap-utilities.rtl.min.css">
+	<link rel="stylesheet" href="../../css/bootstrap.rtl.min.css">
+	<link rel="stylesheet" href="../../css/style.css">
+
+	<script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-core.min.js"></script>
+	<script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-pie.min.js"></script>
+	<!-- FONT AWESOME -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+		integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/js/all.min.js"
+		integrity="sha512-cyAbuGborsD25bhT/uz++wPqrh5cqPh1ULJz4NSpN9ktWcA6Hnh9g+CWKeNx2R0fgQt+ybRXdabSBgYXkQTTmA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script type="text/javascript" src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.esm.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap.esm.min.js"></script>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+		integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+		crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+		integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+		crossorigin="anonymous"></script>
+	<title>Rota</title>
+</head>
+<script>
+	// função pra ler o valor passado pela principal.html
+	function queryString(parameter) {
+		var loc = location.search.substring(1, location.search.length);
+		var param_value = false;
+		var params = loc.split("&");
+		for (i = 0; i < params.length; i++) {
+			param_name = params[i].substring(0, params[i].indexOf('='));
+			if (param_name == parameter) {
+				param_value = params[i].substring(params[i].indexOf('=') + 1)
+			}
+		}
+		if (param_value) {
+			return param_value;
+		}
+		else {
+			return undefined;
+		}
+	}
+	//Utilizando a função pra procurar a variavel pelo nome 
+	var codOnibus = queryString("codOnibus");
+	function pickUpMap() {
+		var url = "http://localhost/php-buscov/usuario/buscar-por-cod.php?codOnibus=" + codOnibus;
+		$.ajax({
+			type: "POST", crossDomain: true, cache: false,
+			url: url,
+			data: url,
+			success: function (data) {
+				$.getJSON(url, function (result) {
+					var id = result[0].cod_onibus;
+					var origem = result[0].origem;
+					var destino = result[0].destino;
+					var placa = result[0].placa;
+					var user = localStorage.getItem('username')
+                	document.querySelector('#username').innerHTML = `<b>${user}</b>`;   
+					document.querySelector('#voltar').href = `status.html?codOnibus=${id}`
+					document.querySelector('#placa').innerHTML = `${placa}`
+					document.querySelector('#origem').innerHTML = `<b>${origem}</b>`
+					document.querySelector('#destino').innerHTML = `<b>${destino}</b>`
+					const directionsRenderer = new google.maps.DirectionsRenderer();
+					const directionsService = new google.maps.DirectionsService();
+					const map = new google.maps.Map(document.getElementById("map"), {
+						zoom: 20,
+						center: origem,
+						disableDefaultUI: true
+					});
+					directionsRenderer.setMap(map);
+					console.log(origem)
+					directionsService
+						.route({
+							origin: origem,
+							destination: destino,
+							travelMode: google.maps.TravelMode.DRIVING
+							// Note that Javascript allows us to access the constant
+							// using square brackets and a string value as its
+							// "property."
+						})
+						.then((response) => {
+							/*No response possui todas as informações como rotas, tempo e distancia*/
+							console.log(response)
+							var dist = response.routes[0].legs[0].distance.text;
+							var dur = response.routes[0].legs[0].duration.text;
+							document.querySelector('#distancia').innerHTML = `<b>${dist}</b>`
+							document.querySelector('#estimado').innerHTML = `<b>${dur}</b>`
+							directionsRenderer.setDirections(response)
+							$('#distanceFromClient').text(response.routes[0].legs[0].distance.text)
+						})
+						.catch((e) => window.alert("Directions request failed due to " + status));
+				});
+			}
+		});
+	}
+	function abrirInfo(){
+		let divInfo = document.querySelector('#abrir-info')
+		if($(divInfo).hasClass('rota-closed')){
+		divInfo.classList.remove('rota-closed')
+		divInfo.classList.add('rota-open')
+		}else{
+		divInfo.classList.remove('rota-open')
+		divInfo.classList.add('rota-closed')
+		}
+
+	}
+</script>
+<header>
+    <div  class="container-fluid bg-azul pt-2 pb-1 row-fluid d-flex justify-content-between">
+        <div class="col">
+            <img src="../../img/user.jpg" class="user-img rounded-circle">  
+            <span class="username" id="username"></span>
+        </div>
+
+        <div class="col-2 d-flex flex-column justify-content-center">
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <div  class="navbar-toggle" data-toggle="collapse" data-target="#links-menu">
+                            <img src="../../img/btn.png" alt="btn" id="btn" class="menu-btn mx-auto">
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    
+    <nav id="links-menu" class="collapse navbar-collapse position-absolute container-fluid bg-azul menu-opts" >
+        <ul class="navbar-nav mt-2">
+            <li class="text-center mt-2">
+                <a href="perfil.html" class="btn btn-outline-light px-5 opt">Sua Conta</a>
+            </li>
+			<li class="text-center mt-2">
+                <a href="principal.html" class="btn btn-outline-light px-5 opt">Busca</a>
+            </li>
+			<li class="text-center mt-2">
+                <a href="" class="btn btn-outline-light px-5 opt" id="voltar">Voltar</a>
+            </li>
+
+            <li class="text-center mt-2 mb-4">
+            	<a href="../../index.html" class="btn btn-outline-light px-5 opt ">Sair</a>
+            </li>
+        </ul>
+    </nav>
+    </header>
+<body class="bg-cinza" id="rota">
+	<div id="map"></div>
+	<div class="onibus-rota rota-closed" id="abrir-info">
+		<div class="info" onclick="abrirInfo()">
+			<p class="text-center">
+				<i class="fas fa-plus fa-2x"></i>
+		</p>
+		</div>
+		<div class="row">
+			<div class="col d-flex justify-content-center mb-3">
+				<p class="text-center placa-onibus" id="placa">DDD-0291</p>
+			</div>
+		</div>
+		<div class="row d-flex justify-content-center">
+			<div class="col">
+				<p class="text-center"><i class="fas fa-location-arrow"></i><span id="origem" class="mx-1"></span></p>
+				<p class="text-center"><i class="fas fa-map-marker-alt"></i><span id="destino" class="mx-1"></span></p>
+			</div>
+			<div class="col">
+				<p><i class="fas fa-route"></i><span id="distancia" class="mx-1"></span></p>
+				<p><i class="far fa-clock"></i><span id="estimado" class="mx-1"></span></p>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../../cordova.js"></script>
+<script type="text/javascript">
+	app.initialize();
+</script>
+<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnF5EkADLnXWLZmQFELB7WueUvqHF0bm4&callback=pickUpMap">
+	</script>
+
+</html>

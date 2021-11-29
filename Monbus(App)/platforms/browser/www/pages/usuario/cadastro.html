@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    
+    <title>Monbus</title>
+</head>
+<script type="text/javascript">
+    function fMasc(objeto,mascara) {
+        obj=objeto
+        masc=mascara
+        setTimeout("fMascEx()",1)
+    }
+    function fMascEx() {
+        obj.value=masc(obj.value)
+    }
+    function mCPF(cpf){
+        cpf=cpf.replace(/\D/g,"")
+        cpf=cpf.replace(/(\d{3})(\d)/,"$1.$2")
+        cpf=cpf.replace(/(\d{3})(\d)/,"$1.$2")
+        cpf=cpf.replace(/(\d{3})(\d{1,2})$/,"$1-$2")
+        return cpf
+    }
+    function mNum(num){
+        num=num.replace(/\D/g,"")
+        return num
+    }
+</script>
+<body>
+    <header class="header">
+        <div class="container mx-auto">
+            <p class="text-center fs-4 mt-3">Cadastre-se</p>
+        </div>
+    </header>
+
+    <main class="container-fluid">
+        <div class="inputs mx-auto flex-column d-flex justify-content-center">
+            <label for="nome" class="form-label">Nome:</label>
+            <input type="text" name="nome" class="form-control" placeholder="Seu nome" id="nome-usuario" />
+
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" name="email" class="form-control" placeholder="Seu email" id="email-usuario"/>
+
+            <label for="cpf" class="form-label">CPF:</label>
+            <input type="text" name="cpf" class="form-control" placeholder="000.000.000-00" id="cpf-usuario" onkeydown="javascript: fMasc( this, mCPF );" maxlength="14" autocomplete="off" />
+
+            <label for="pass" class="form-label">Senha:</label>
+            <input type="password" name="pass"class="form-control" placeholder="senha (8 digitos)" id="senha-usuario" />
+
+            <label for="pass" class="form-label">Confirmar senha:</label>
+            <input type="password" name="pass"class="form-control" placeholder="senha (8 digitos)" id="senha-cadastro-confirm" />
+            <p class="aviso text-center bg-danger mt-2 rounded" id="aviso"></p>
+            <button class="btn fs-5 rounded-3 btn-outline-secondary mt-4" onclick="cadastrar()" id="insert">Cadastrar</button>
+            
+            <div class="options">
+                <a href="../../index.html" class="btn fs-6 btn-primary  mt-4 mb-3">Login</a>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+<script defer>
+    let cadastrar = () => {
+    var nomeUsuario = $("#nome-usuario").val();
+    var emailUsuario = $("#email-usuario").val();
+    var cpfUsuario = $("#cpf-usuario").val();
+    var senhaUsuario = $("#senha-usuario").val();
+    var senhaConfirm = $("#senha-cadastro-confirm").val();
+    if(senhaUsuario != senhaConfirm){
+        $("#aviso").text("As senhas não são iguais, digite novamente")
+    }else if(senhaUsuario.length < 8){
+        $("#aviso").text("A senha tem menos que 8 dígitos, digite novamente")
+    }else{
+    var dataString = "nome-usuario=" + nomeUsuario + "&cpf-usuario=" + cpfUsuario + "&email-usuario=" + emailUsuario + "&senha-usuario=" + senhaUsuario + "&register=";
+    if ($.trim(nomeUsuario).length > 0 & $.trim(emailUsuario).length > 0 & $.trim(cpfUsuario).length > 0 & $.trim(senhaUsuario).length > 0) 
+    {
+        $.ajax({
+        type: "POST",
+        url: "http://localhost/php-buscov/usuario/cadastrar.php" ,
+        data: dataString,
+        crossDomain: true,
+        cache: false,
+        success: function(data) {
+            if ($.trim(data) == "success") {
+                document.querySelector('#aviso').classList.remove('bg-danger')
+                document.querySelector('#aviso').classList.add('bg-success')
+                $("#aviso").text("Cadastrado com sucesso");     
+                $("#register").val('Cadastrar');
+            } 
+            else if ($.trim(data) == "error") {
+                $("#aviso").text("Algo de errado aconteceu");
+            }
+        }
+        });
+    }
+    return false;
+    
+    }    
+}
+
+</script>
+
+</html>

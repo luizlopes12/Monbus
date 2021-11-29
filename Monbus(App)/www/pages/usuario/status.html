@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../css/bootstrap-grid.min.css">
+        <link rel="stylesheet" href="../../css/bootstrap-grid.rtl.min.css">
+        <link rel="stylesheet" href="../../css/bootstrap-reboot.min.css">
+        <link rel="stylesheet" href="../../css/bootstrap-reboot.rtl.min.css">
+        <link rel="stylesheet" href="../../css/bootstrap-utilities.min.css">
+        <link rel="stylesheet" href="../../css/bootstrap-utilities.rtl.min.css">
+        <link rel="stylesheet" href="../../css/bootstrap.rtl.min.css">
+        <link rel="stylesheet" href="../../css/style.css">
+        <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-core.min.js"></script>
+        <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-pie.min.js"></script>
+        <!-- FONT AWESOME -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/js/all.min.js" integrity="sha512-cyAbuGborsD25bhT/uz++wPqrh5cqPh1ULJz4NSpN9ktWcA6Hnh9g+CWKeNx2R0fgQt+ybRXdabSBgYXkQTTmA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script type="text/javascript" src="../../js/jquery.min.js"></script>
+        <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="../../js/bootstrap.esm.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <script type="text/javascript" src="../../js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="../../js/bootstrap.esm.min.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+      <title>Status</title>
+  </head>
+    <script>
+    // função pra ler o valor passado pela principal.html
+    function queryString(parameter) {  
+              var loc = location.search.substring(1, location.search.length);   
+              var param_value = false;   
+              var params = loc.split("&");   
+              for (i=0; i<params.length;i++) {   
+                  param_name = params[i].substring(0,params[i].indexOf('='));   
+                  if (param_name == parameter) {                                          
+                      param_value = params[i].substring(params[i].indexOf('=')+1)   
+                  }   
+              }   
+              if (param_value) {   
+                  return param_value;   
+              }   
+              else {   
+                  return undefined;   
+              }   
+        }
+    //Utilizando a função pra procurar a variavel pelo nome 
+    var codOnibus = queryString("codOnibus");
+    var user = localStorage.getItem('username');
+    //Buscando os dados do onibus pelo codigo
+    $(document).ready(function() {
+            var url = "http://localhost/php-buscov/usuario/buscar-por-cod.php?codOnibus=" + codOnibus;
+            $.ajax({
+            type: "POST",crossDomain: true, cache: false,
+            url: url,
+            data: url,
+            success: function(data){    
+            $.getJSON(url, function(result) {     
+            $.each(result, function(i, field) {     
+            var assentos = field.assentos;                   
+            var ocupados = field.ocupados; 
+            sessionStorage.setItem('assentosValor', assentos)
+            sessionStorage.setItem('ocupadosValor', ocupados)
+            var id = field.cod_onibus;
+            
+            document.querySelector('#comprar').href = `comprar.html?codOnibus=${id}`
+            document.querySelector('#rota').href = `rota.html?codOnibus=${id}`
+            document.querySelector('#username').innerHTML = `<b>${user}</b>`;
+            document.querySelector('#proporcao').innerHTML = `<b><span id='ocupados'>${ocupados}</span>/<span id='assentos'>${assentos}</span></b>`;
+                    });      
+                });                     
+            }
+        });
+        });
+        
+    anychart.onDocumentReady(function () {
+    let ocupadosValor = sessionStorage.getItem('ocupadosValor')
+    let assentosValor = sessionStorage.getItem('assentosValor')
+  
+  var data = anychart.data.set([
+    ['', ocupadosValor],
+    ['', assentosValor - ocupadosValor],
+  ]);
+
+  var ocupados = Math.floor((ocupadosValor / assentosValor)*100);
+  var chart = anychart.pie(data);
+
+  chart.innerRadius('80%')
+
+  var palette = anychart.palettes.distinctColors();
+ 
+  palette.items([
+    { color: '#21BD59' },
+    { color: '#22c6c98a' },
+  ]);
+
+  chart.palette(palette);
+  
+  chart.labels().format('{%x} {%y}%').fontSize(16);
+  
+  chart.legend(false);
+  
+  chart.tooltip().format('Assentos livres: {%PercentValue}%');
+  
+  var label = anychart.standalones.label();
+  
+  label
+    .useHtml(true)
+    .text(
+      `<h3>${ocupados}% ocupados</h3>`
+    )
+    .position('center')
+    .anchor('center')
+    .hAlign('center')
+    .vAlign('middle');
+
+  chart.center().content(label);
+  
+  chart.container('container');
+  
+  chart.draw();
+});
+    </script>
+<body class="status">
+  <header>
+    <div  class="container-fluid bg-azul pt-2 pb-1 row-fluid d-flex justify-content-between">
+        <div class="col">
+            <img src="../../img/user.jpg" class="user-img rounded-circle">  
+            <span class="username" id="username"></span>
+        </div>
+
+        <div class="col-2 d-flex flex-column justify-content-center">
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <div  class="navbar-toggle" data-toggle="collapse" data-target="#links-menu">
+                            <img src="../../img/btn.png" alt="btn" id="btn" class="menu-btn mx-auto">
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    
+    <nav id="links-menu" class="collapse navbar-collapse position-absolute container-fluid bg-azul menu-opts" >
+        <ul class="navbar-nav mt-2">
+            <li class="text-center mt-2">
+                <a href="perfil.html" class="btn btn-outline-light px-5 opt">Sua Conta</a>
+            </li>
+            <li class="text-center mt-2">
+                <a href="principal.html" class="btn btn-outline-light px-5 opt ">Busca</a>
+            </li>
+            
+
+            <li class="text-center mt-2 mb-4">
+              <a href="../../index.html" class="btn btn-outline-light px-5 opt ">Sair</a>
+            </li>
+        </ul>
+    </nav>
+    </header>
+
+    <main>
+        <p class="text-center p-1 mt-2 fs-5">Dados do ônibus</p>
+        <div class="row-fluid d-flex justify-content-evenly mt-3 mb-2 status-desc">
+            <p class="col-4 p-1 rounded text-center ocupados">Assentos disponiveis</p>
+            <p class="col-4 p-1 rounded text-center disponiveis">Assentos Ocupados</p>
+        </div>
+        <div id="container"></div>
+        <p class="text-center p-1 mt-2 fs-4 mb-2" id="proporcao">Aguarde...</p>
+        <div class="container d-flex justify-content-center">
+            <div class="status-mapa d-flex justify-content-center">
+                <img src="../../img/map-icon.png">
+            </div>
+        </div>
+        <div class="status-rota text-center mx-auto mt-2">
+            <p><a href="" id="rota">Ver localização</a></p>
+            <p id="local"></p>
+        </div>
+        <div class="comprar mx-auto mb-5">
+            <p class="text-center"><a href="" id="comprar">Comprar passagem</a></p>
+        </div>
+
+    </main>
+
+</body>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../../cordova.js"></script>
+<script type="text/javascript">
+    app.initialize();
+</script>
+</html>

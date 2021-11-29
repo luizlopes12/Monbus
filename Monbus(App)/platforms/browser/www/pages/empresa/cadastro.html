@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+        <link rel="stylesheet" href="../../css/style.css">
+        <link rel="stylesheet" href="../../css/bootstrap.min.css">
+        <script type="text/javascript" src="../../js/jquery.min.js"></script>
+        
+        <title>Monbus</title>
+    </head>
+<body>
+    <header class="header">
+        <div class="container mx-auto">
+            <p class="text-center fs-4 mt-3">Cadastro para empresas</p>
+        </div>
+    </header>
+    <main class="container-fluid">
+        <div class="inputs mx-auto flex-column d-flex justify-content-center">
+            <label for="nome" class="form-label">Nome fantasia:</label>
+            <input type="email" class="form-control" placeholder="Nome da empresa" id="nome-empresa">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" placeholder="Email da empresa" id="email-empresa">
+            <label for="cpf" class="form-label">CNPJ:</label>
+            <input type="text" class="form-control" placeholder="00.000.000/0001-00" id="cnpj" >
+            <label for="pass" class="form-label">Senha:</label>
+            <input type="password" class="form-control" placeholder="senha (8 digitos)" id="senha-empresa">
+            <label for="pass" class="form-label">Confirmar senha:</label>
+            <input type="password" class="form-control" placeholder="senha (8 digitos)" id="senha-empresa-confirm">
+            <p class="aviso text-center bg-danger mt-2 rounded" id="aviso"></p>
+            <button class="btn fs-5 rounded-3 btn-outline-secondary mt-4" onclick="cadastrar()" id="register">Cadastrar</button>
+            <div class="options">
+                <a href="./login.html" class="btn fs-6 btn-success mt-4 mb-3">Login</a>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+<script type="text/javascript" defer>
+    let cadastrar = () => {
+    var nomeEmpresa = $("#nome-empresa").val();
+    var emailEmpresa = $("#email-empresa").val();
+    var cnpj = $("#cnpj").val();
+    var senhaEmpresa = $("#senha-empresa").val();
+    var senhaEmpresaConfirm = $("#senha-empresa-confirm").val();
+
+    if(senhaEmpresa != senhaEmpresaConfirm){
+        $("#aviso").text("As senhas não são iguais, digite novamente")
+    }
+    else if(senhaEmpresa.length < 8){
+        $("#aviso").text("A senha tem menos que 8 dígitos, digite novamente")
+    }
+
+    else{
+    var dataString = "nome-empresa=" + nomeEmpresa + "&cnpj=" + cnpj + "&email-empresa=" + emailEmpresa + "&senha-empresa=" + senhaEmpresa + "&register=";
+
+    if ($.trim(nomeEmpresa).length > 0 & $.trim(emailEmpresa).length > 0 & $.trim(cnpj).length > 0 & $.trim(senhaEmpresa).length > 0) 
+    {
+        $.ajax({
+        type: "POST",
+        url: "http://localhost/php-buscov/empresa/cadastrar.php",
+        data: dataString,
+        crossDomain: true,
+        cache: false,
+        beforeSend: function(){
+            $("#register").val('Conectando ao banco...');
+        },
+        
+        success: function(data) {
+            if ($.trim(data) == "success") {
+                document.querySelector('#aviso').classList.remove('bg-danger')
+                document.querySelector('#aviso').classList.add('bg-success')
+                $("#aviso").text("Cadastrado com sucesso");     
+                $("#register").val('Cadastrar');
+            } 
+            else if ($.trim(data) == "error") {
+                $("#aviso").text("Algo de errado aconteceu");
+            }
+        }
+        });
+    }
+        return false;  
+        }
+    }   
+
+        //Mascara de cnpj
+        document.getElementById('cnpj').addEventListener('input', function (e) {
+        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,4})(\d{0,2})/);
+        e.target.value = !x[2] ? x[1] : x[1] + '.' + x[2] + '.' + x[3] + '/' + x[4] + (x[5] ? '-' + x[5] : '');
+        });
+</script>
+        
+
+</html>

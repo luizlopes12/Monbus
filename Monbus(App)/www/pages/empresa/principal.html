@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../css/bootstrap-grid.min.css">
+        <link rel="stylesheet" href="../../css/bootstrap-grid.rtl.min.css">
+        <link rel="stylesheet" href="../../css/bootstrap-reboot.min.css">
+        <link rel="stylesheet" href="../../css/bootstrap-reboot.rtl.min.css">
+        <link rel="stylesheet" href="../../css/bootstrap-utilities.min.css">
+        <link rel="stylesheet" href="../../css/bootstrap-utilities.rtl.min.css">
+        <link rel="stylesheet" href="../../css/bootstrap.rtl.min.css">
+        <link rel="stylesheet" href="../../css/style.css">
+        <!-- FONT AWESOME -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/js/all.min.js" integrity="sha512-cyAbuGborsD25bhT/uz++wPqrh5cqPh1ULJz4NSpN9ktWcA6Hnh9g+CWKeNx2R0fgQt+ybRXdabSBgYXkQTTmA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script type="text/javascript" src="../../js/jquery.min.js"></script>
+        <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="../../js/bootstrap.esm.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../../js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="../../js/bootstrap.esm.min.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+        <title>Tela Inicial - EMPRESA</title>
+        <script>
+        $(document).ready(function() {
+        $("#buscar").click(function(){
+            //var procurar ="origem=" + origem + "&destino=" + destino + "&buscar=";
+            var origem = $.trim($("#origem-onibus").val());
+            var destino = $.trim($("#destino-onibus").val());
+            var url = "http://localhost/php-buscov/usuario/buscar-onibus.php?origem=" + origem + "&destino=" + destino;
+            $.ajax({
+            type: "POST",crossDomain: true, cache: false,
+            url: url,
+            data: url,
+            success: function(data){    
+            $.getJSON(url, function(result) {     
+            $.each(result, function(i, field) {     
+            var codOnibus = field.cod_onibus;                   
+            var horaInicio = field.horaInicio; 
+            var horaTermino = field.horaTermino; 
+            var preco = field.preco;
+            var destinoBusca = field.destino;
+            var origemBusca = field.origem;
+            var card = document.querySelector('#card').cloneNode(true)
+            document.querySelector('#lista').appendChild(card)
+            document.getElementById('horaInicio').innerHTML = horaInicio + '\n';
+            document.getElementById('horaTermino').innerHTML = horaTermino + '\n';
+            document.getElementById('preco').innerHTML = `<sup>R$</sup>${preco} \n`;
+            document.getElementById('destinoBusca').innerHTML = destinoBusca + '\n';
+            document.getElementById('origemBusca').innerHTML = origemBusca + '\n';
+            document.querySelector('#btnStatus').href = `status.html?codOnibus=${codOnibus}`;
+            document.querySelector('#card').classList.remove('d-none')
+                    });      
+                });                     
+            }
+        });
+        });
+    });     
+            function queryString(parameter) {  
+              var loc = location.search.substring(1, location.search.length);   
+              var param_value = false;   
+              var params = loc.split("&");   
+              for (i=0; i<params.length;i++) {   
+                  param_name = params[i].substring(0,params[i].indexOf('='));   
+                  if (param_name == parameter) {                                          
+                      param_value = params[i].substring(params[i].indexOf('=')+1)   
+                  }   
+              }   
+              if (param_value) {   
+                  return param_value;   
+              }   
+              else {   
+                  return undefined;   
+              }   
+        }
+        var email = queryString('emailEmpresa')
+        var buscarNome = "http://localhost/php-buscov/empresa/buscar-nome.php?email=" + email;
+        $.ajax({
+            type: "POST",crossDomain: true, cache: false,
+            url: buscarNome,
+            data: buscarNome,
+            success: function(data){    
+            $.getJSON(buscarNome, function(result) {     
+            $.each(result, function(i, field) {  
+            var nome = field.nome;
+            localStorage.setItem('username', nome);
+                });  
+                var user = localStorage.getItem('username')
+                document.querySelector('#onibus').href = `onibus.html?emailEmpresa=${email}`
+                document.querySelector('#username').innerHTML = `<b>${user}</b>`;    
+            });                     
+        }
+    });
+
+        </script>
+
+        <!-----------------------------  
+        SCRIPT IMPORTANTE PARA CONSULTAR
+        ------------------------------->
+        <script type="text/javascript" defer>
+        let sair = () =>{
+            localStorage.loginstatus = "true";
+        }  
+            /*
+    Auto complete nos inputs de origem e destino
+    */
+    
+    var searchInput1 = 'origem-onibus';
+    var searchInput2 = 'destino-onibus';
+    //Origem input
+    $(document).ready(function () {
+    var autocomplete;
+    autocomplete = new google.maps.places.Autocomplete((document.getElementById(searchInput1)), {
+        types: ['geocode'],
+        componentRestrictions: {
+        country: "BR"
+    }
+    });
+	
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        var near_place = autocomplete.getPlace();
+        document.getElementById('loc_lat1').value = near_place.geometry.location.lat();
+        document.getElementById('loc_long1').value = near_place.geometry.location.lng();
+    });
+    });
+    //Destino input
+    $(document).ready(function () {
+    var autocomplete;
+    autocomplete = new google.maps.places.Autocomplete((document.getElementById(searchInput2)), {
+        types: ['geocode'],
+        componentRestrictions: {
+        country: "BR"
+    }
+    });
+	
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        var near_place = autocomplete.getPlace();
+        document.getElementById('loc_lat2').value = near_place.geometry.location.lat();
+        document.getElementById('loc_long2').value = near_place.geometry.location.lng();
+    });
+    });               
+        </script>
+    </head>
+<body>
+    <header>
+        <div  class="container-fluid bg-roxo pt-2 pb-1 row-fluid d-flex justify-content-between">
+        <div class="col">
+        <img src="../../img/user.jpg" class="user-img rounded-circle">  
+        <span class="username" id="username"></span>
+        </div>
+        <div class="col-2 d-flex flex-column justify-content-center">
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <div  class="navbar-toggle" data-toggle="collapse" data-target="#links-menu">
+                            <img src="../../img/btn.png" alt="btn" id="btn" class="menu-btn mx-auto">
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <nav id="links-menu" class="collapse navbar-collapse position-absolute container-fluid bg-roxo menu-opts" >
+        <ul class="nav navbar-nav">
+            <li class="text-center mt-3">
+                <a href="" class="btn btn-outline-light px-5 opt" id="onibus">Cadastrar ônibus</a>
+            </li>
+            <li class="text-center">
+                <a href="../../index.html" class="btn btn-outline-light px-5 mb-3 opt" onclick="sair()">Sair</a>
+            </li>
+        </ul>
+    </nav>
+    </header>
+
+    <main>
+        <div class="title">
+            <div class="pesquisa container mt-4 d-flex flex-column">
+                <!--------------------------- 
+                INPUT PARA MARCAR A ORIGEM 
+                ----------------------------->
+                <div class="input-group flex-nowrap mb-2">
+                    <span class="icons-div"><i class="fas fa-location-arrow color-laranja"></i></span>
+                    <input type="text" class="form-control border-0" placeholder="Origem" aria-describedby="addon-wrapping" id="origem-onibus">
+                </div>
+
+                <!-------------------------
+                INPUT PARA MARCAR O DESTINO 
+                --------------------------->
+                <div class="input-group flex-nowrap mb-2">
+                    <span class="icons-div"><i class="fas fa-map-marker-alt color-azul"></i></span>
+                    <input type="text" class="form-control border-0" placeholder="Destino" aria-describedby="addon-wrapping" id="destino-onibus">
+                </div>
+
+                <button class="btn bg-laranja mt-3 fs-8 color d-flex align-items-center justify-content-center mb-3" id="buscar"><i class="fas fa-search icon-search"></i>Buscar</button>
+      
+            </div>     
+        </div>
+    </main>
+
+    <section class="d-flex container flex-wrap">
+        <div class="d-flex mx-auto row" id="lista">
+            <div class="p-2 mx-auto mb-3 bg-branco rounded row d-none" id="card">
+                <div class="col-6 d-flex align-items-center justify-content-start">
+                    <label class="color-preta fs-5 fw-bold font-martel" id="horaInicio">
+                    
+                    </label>
+                    <i class="fas fa-long-arrow-alt-right ms-1"></i>
+                    <label class="color-preta fs-5 fw-bold font-martel" id="horaTermino">
+                    
+                    </label>
+                </div>
+
+                <div class="col-6 d-flex align-items-center justify-content-end">
+                    <span class="fw-bold font-martel fs-4 mt-1" id="preco"></span>
+                </div>
+
+                <div class="col-7">
+                    <div class="d-flex align-items-center justify-content-start">
+                        <i class="fas fa-location-arrow color-laranja"></i>
+                        <label for="" class="ms-2" id="origemBusca"></label> 
+                    </div>
+                    
+                    <div class="d-flex align-items-center justify-content-start">
+                        <i class="fas fa-map-marker-alt color-azul"></i>
+                        <label for="" class="ms-2" id="destinoBusca"></label>    
+                    </div>  
+                </div> 
+
+                <div class="col-5 d-flex align-items-center justify-content-end">
+                    <a href="" class="btn btn-warning text-uppercase font-martel fw-bold" id="btnStatus">Status</a>
+                </div>
+            </div>
+        </div>
+      
+    </section>  
+
+</body>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDnF5EkADLnXWLZmQFELB7WueUvqHF0bm4"></script>
+</html>

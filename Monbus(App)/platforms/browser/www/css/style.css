@@ -1,0 +1,457 @@
+@import url('https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Martel+Sans:wght@200;300;400;600;700;800;900&display=swap');
+/*
+    1- font-family: 'Julius Sans One', sans-serif;
+    2- font-family: 'Martel Sans', sans-serif;
+*/
+
+*, html, body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#container{
+    height: 250px;
+}
+.status{
+    background: #fff;
+}
+.status-mapa{
+    width: 250px;
+}
+/* .ui-loader{
+    display: none;
+}
+.ui-icon-loading{
+    display: none;
+} */
+#map{
+    width: 100%;
+    height: 100vh;
+}
+.comprar{
+    width: 200px;
+    background: #ffc935;
+    padding: 10px;
+    font-weight: bold;
+    margin-top: 35px;
+    border-radius: 15px;
+}
+.comprar a{
+    text-decoration: none;
+    color: #000;
+}
+.status-rota{
+    background: #21BD59;
+    width: 150px;
+    border-radius: 15px;
+    padding: 10px;
+}
+.status-rota a{
+    text-decoration: none;
+    color: #ffffff;
+}
+.status-mapa img{
+    width: 100px;
+}
+.status-desc{
+    color: #fff;
+    font-size: .8em;
+}
+body{
+    background: #E9E9E9;
+    font-family: 'Martel Sans', sans-serif;
+}
+.hr{
+    width: 250px;
+    margin: auto;
+}
+.hr-rota{
+    width: 30px;
+    border-radius: 20%;
+    border: 3px solid rgb(87, 87, 87);
+}
+.onibus-rota{
+    width: 100%;
+    padding: 5px 10px 10px 10px;
+    height: 150px;
+    border-radius: 50px 50px 0  0;
+    box-shadow: 0 0 25px 5px
+    rgba(0, 0, 0, 0.10);
+    background: rgba(255, 255, 255, 0.9);
+}
+.rota-closed{
+    position: absolute;
+    bottom: -115px;
+    transition: all .2s linear;
+}
+.assentos-list{
+    padding: 10px 100px;
+}
+/*
+Testes da pagina de comprar
+*/
+
+
+
+.assentos-num {
+    list-style-type: none;
+    margin: 10px 0 0 0;
+    padding: 0;
+  }
+  
+  .assentos-num li {
+    float: left;
+    margin: 0 5px 0 0;
+    width: 50px;
+    height: 40px;
+    position: relative;
+  }
+  .assentos-num label{
+      background: #2FA61F;
+      border-radius: 10px;
+      color: white;
+  }
+  .assentos-num label,
+  .assentos-num input {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  
+  .assentos-num input[type="radio"] {
+    opacity: 0.01;
+    z-index: 100;
+  }
+
+  .assentos-num label {
+    padding: 5px;
+    margin: 1px;
+    border: 1px solid #CCC;
+    cursor: pointer;
+    z-index: 90;
+  }
+  
+  .assentos-num label:hover {
+    background: #ffc935;
+  }
+
+
+
+
+/*
+*/
+.rota-open{
+    transition: all .2s linear;
+    position: absolute;
+    bottom: 0px;
+}
+.placa-onibus{
+    border-radius: 10px;
+    background-color: rgba(109, 111, 126, 0.4);
+    border: 1px solid #000;
+    font-weight: bolder;
+    padding: 4px 10px;
+    width: 120px;
+}
+.placa-top{
+    background:#092079;
+}
+.disponiveis{
+    background: #21BD59;
+}
+.ocupados{
+    background: #22c6c9e5;
+}
+.bg-perfil{
+    height: 120vh;
+    background: #21abd1be;
+}
+.perfil-image{
+    width: 100%;
+    height: 200px;
+}
+
+.dados p{
+    color: #fff;
+}
+.perfil-image img{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+.buscov{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.322);
+    width: 100px;
+}
+.buscov2{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.322);
+    width: 200px;
+}
+.cadastreButton{
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    margin-top: 80px;
+    font-weight: normal;
+    border-radius: 5px;
+    background-color: #00a3d5;
+}
+.cadastreButton:visited{
+    color: #fff;
+}
+ul li{
+    list-style: none;
+}
+
+p{
+    margin: 0;
+    padding: 0;
+}
+
+.font-martel{
+    font-family: 'Martel Sans', sans-serif;
+}
+
+.font-julius{
+    font-family: 'Julius Sans One', sans-serif;
+}
+
+/********************************
+        ESTILOS GERAIS
+*****************************/
+.f-p1{
+    font-size: 0.8rem;
+}
+
+/********************************
+        ESTILOS GERAIS
+*****************************/
+.full{
+    width: 100%;
+    height: 100%;
+}
+
+.te-0{
+    top: 0;
+    left: 0;
+}
+
+.bg-branco{
+    background: #FFF;
+}
+
+.color-white{
+    color: white;
+}
+
+.bg-cinza{
+    /*background: #050510;*/
+    background: #E9E9E9;
+}
+.bg-azul{
+    background: #7fb5c5;
+}
+.bg-cinza-escuro{
+    background: #333;
+}
+
+.color-cinza-escuro{
+    color: #333;
+}
+
+.bg-laranja{
+    background: #ffc935;
+}
+
+.color-laranja{
+    color: #ffcc3e;
+}
+
+.bg-azul{
+    background: #00a4d6;
+}
+
+.color-azul{
+    color: #00a3d5;
+}
+
+.bg-verde{
+    background: #2FA61F;
+}
+
+.color-verde{
+    color: #2FA61F;
+}
+
+.bg-vermelho{
+    background: #BA1C1C;
+}
+.item{
+    width: 80px;
+    height: 50px;
+    background: green;
+    margin: 5px;
+    border-radius: 15%;
+}
+
+.color-vermelho{
+    color: #BA1C1C;
+}
+
+.txt{
+    color: #FFF;
+    font-size: 0.7em;
+}
+
+.form-label-1{
+    margin-top: -3rem;
+}
+
+/**********************************
+
+***********************************/
+#rota{
+    overflow: hidden;
+}
+.inputs{
+    width: 200px;
+}
+.header img{
+    width: 250px;
+}
+.inputs button{
+    transition: all .2s linear;
+}
+.options a{
+    width: 200px;
+    font-size: .9em;
+}
+.aviso{
+    color: #f5deb3;
+}
+.user-img{
+    width: 40px;
+}
+.menu-btn{
+    width: 30px;
+}
+
+.username{
+    color: #fff;
+}
+
+.opt{
+    text-align: center;
+    min-width: 60%;
+    max-width: 60%;
+    font-size: 1em;
+}
+
+.title h5{
+    color: rgb(124, 124, 124);
+}
+.title hr{
+    width: 50%;
+    height: 2px;
+    margin: auto;
+}
+.menu-opts{
+    /*border-radius: 0 0 25px 25px;*/
+    z-index: 99999;
+}
+
+.icons-div{
+    display: flex;
+    align-items: center;
+    padding: .375rem .75rem;
+
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+
+    background: #FFF;
+    color: #212529;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.icon-search{
+    color: var(--clr-white);
+    margin-right: 5px;
+    width: 10px;
+    height: 10px;
+}
+
+.bottom{
+    position: absolute;
+    bottom: 0;
+}
+
+/*********************************
+    ESTILOS GERAIS PARA STATUS
+**********************************/
+.status-bloco{
+    width: 50px;
+    height: 35px;
+    border-radius: 10px;
+    border-bottom: 2px solid #0A0917;
+}
+.status-bloco:hover{
+    filter:grayscale(2);
+}
+.selecionado:active{
+    background: #ffcc3e;
+}
+
+.ocupado{
+    background: #333;
+}
+
+.rodape{
+    width: 100%;
+    height: 60px;
+}
+
+.s-botao{
+    width: 200px;
+    height: 100px; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

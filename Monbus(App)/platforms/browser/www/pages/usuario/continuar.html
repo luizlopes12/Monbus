@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../css/bootstrap-grid.min.css" />
+    <link rel="stylesheet" href="../../css/bootstrap-grid.rtl.min.css" />
+    <link rel="stylesheet" href="../../css/bootstrap-reboot.min.css" />
+    <link rel="stylesheet" href="../../css/bootstrap-reboot.rtl.min.css" />
+    <link rel="stylesheet" href="../../css/bootstrap-utilities.min.css" />
+    <link rel="stylesheet" href="../../css/bootstrap-utilities.rtl.min.css" />
+    <link rel="stylesheet" href="../../css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="../../css/style.css" />
+    <!-- FONT AWESOME -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/js/all.min.js"
+      integrity="sha512-cyAbuGborsD25bhT/uz++wPqrh5cqPh1ULJz4NSpN9ktWcA6Hnh9g+CWKeNx2R0fgQt+ybRXdabSBgYXkQTTmA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script
+      type="text/javascript"
+      src="../../js/bootstrap.bundle.min.js"
+    ></script>
+    <script type="text/javascript" src="../../js/bootstrap.esm.min.js"></script>
+    <!-- Biblioteca do jsPDF -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"
+      integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs"
+      crossorigin="anonymous"
+    ></script>
+    <!--
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script>
+    <script
+      type="text/javascript"
+      src="../../js/bootstrap.bundle.min.js"
+    ></script>
+    <script type="text/javascript" src="../../js/bootstrap.esm.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+      integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+      integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+      crossorigin="anonymous"
+    ></script>
+    <title>Comprar</title>
+  </head>
+  <style>
+    html{
+    background: #fff !important;
+    }
+  </style>
+  <script>
+    // função pra ler o valor passado pela principal.html
+    function queryString(parameter) {
+      var loc = location.search.substring(1, location.search.length);
+      var param_value = false;
+      var params = loc.split("&");
+      for (i = 0; i < params.length; i++) {
+        param_name = params[i].substring(0, params[i].indexOf("="));
+        if (param_name == parameter) {
+          param_value = params[i].substring(params[i].indexOf("=") + 1);
+        }
+      }
+      if (param_value) {
+        return param_value;
+      } else {
+        return undefined;
+      }
+    }
+    //Utilizando a função pra procurar a variavel pelo nome
+    var codOnibus = queryString("codOnibus");
+    var user = localStorage.getItem("username");
+    var cpf = localStorage.getItem('usercpf');
+    var lugar = queryString("lugar");
+    $(document).ready(function () {
+      var url =
+        "http://localhost/php-buscov/usuario/buscar-por-cod.php?codOnibus=" +
+        codOnibus;
+      $.ajax({
+        type: "POST",
+        crossDomain: true,
+        cache: false,
+        url: url,
+        data: url,
+        success: function (data) {
+          $.getJSON(url, function (result) {
+            var origem = result[0].origem;
+            var destino = result[0].destino;
+            var horario = result[0].horaInicio;
+            var assentos = result[0].assentos;
+            var ocupados = result[0].ocupados;
+            var placa = result[0].placa;
+            var preco = result[0].preco;
+
+            document.querySelector("#origem").innerHTML = origem;
+            document.querySelector("#destino").innerHTML = destino;
+            document.querySelector("#horario").innerHTML = horario;
+            document.querySelector("#poltrona").innerHTML = lugar;
+            document.querySelector("#preco").innerHTML = preco;
+            document.querySelector("#onibus").innerHTML = placa;
+            document.querySelector("#username").innerHTML = `<b>${user}</b>`;
+            document.querySelector(
+              "#voltar"
+            ).href = `status.html?codOnibus=${codOnibus}`;
+          });
+        },
+      });
+    });
+  </script>
+  <body class="bg-light">
+    <header>
+      <div
+        class="
+          container-fluid
+          bg-azul
+          pt-2
+          pb-1
+          row-fluid
+          d-flex
+          justify-content-between
+        "
+      >
+        <div class="col">
+          <img src="../../img/user.jpg" class="user-img rounded-circle" />
+          <span class="username" id="username"></span>
+        </div>
+
+        <div class="col-2 d-flex flex-column justify-content-center">
+          <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+              <div class="navbar-header">
+                <div
+                  class="navbar-toggle"
+                  data-toggle="collapse"
+                  data-target="#links-menu"
+                >
+                  <img
+                    src="../../img/btn.png"
+                    alt="btn"
+                    id="btn"
+                    class="menu-btn mx-auto"
+                  />
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <nav
+        id="links-menu"
+        class="
+          collapse
+          navbar-collapse
+          position-absolute
+          container-fluid
+          bg-azul
+          menu-opts
+        "
+      >
+        <ul class="navbar-nav mt-2">
+          <li class="text-center mt-2">
+            <a
+              href="perfil.html"
+              class="btn btn-outline-light px-5 opt font-julius text-uppercase"
+              >Sua Conta</a
+            >
+          </li>
+          <li class="text-center mt-2">
+            <a
+              href="principal.html"
+              class="btn btn-outline-light px-5 opt font-julius text-uppercase"
+              >Transportes</a
+            >
+          </li>
+          <li class="text-center mt-2 mb-4">
+            <a
+              href=""
+              class="btn btn-outline-light px-5 opt font-julius text-uppercase"
+              id="voltar"
+              >Voltar</a
+            >
+          </li>
+
+          <li class="text-center mt-2 mb-4">
+            <a
+              href="../../index.html"
+              class="btn btn-outline-light px-5 opt font-julius text-uppercase"
+              >Sair</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div class="row container mx-auto d-flex justify-content-center mt-5">
+        <p class="fs-3 text-center">Confirmar dados</p>
+        <p class="p-2 fs-5 mb-2 border border-2">
+          Origem: <span id="origem"></span>
+        </p>
+        <p class="p-2 fs-5 mb-2 border border-2">
+          Destino: <span id="destino"></span>
+        </p>
+        <p class="p-2 fs-5 mb-2 border border-2">
+          Horário: <span id="horario"></span>
+        </p>
+        <p class="p-2 fs-5 mb-2 border border-2">
+          Ônibus: <span id="onibus"></span>
+        </p>
+        <p class="p-2 fs-5 mb-2 border border-2">
+          Poltrona: <span id="poltrona"></span>
+        </p>
+        <p class="p-2 fs-5 mb-2 border border-2">
+          Preço: <span id="preco"></span>
+        </p>
+      </div>
+      <div class="row container mx-auto d-flex justify-content-center mt-5">
+        <select name="pagamento" class="form-select" id="pagamento">
+          <option value="pix">Pix</option>
+          <option value="boleto">Boleto</option>
+          <option value="credito">Cartão de Crédito</option>
+          <option value="debito">Cartão de Débito</option>
+        </select>
+      </div>
+      <div class="comprar mx-auto mt-5">
+        <p class="text-center fs-5" onclick="confirm()">
+          <a href="" id="finalizar">Finalizar</a>
+        </p>
+      </div>
+    </main>
+    <script>
+            var url = "http://localhost/php-buscov/usuario/add-passageiro.php?codOnibus=" + codOnibus;
+            $.ajax({
+            type: "POST",crossDomain: true, cache: false,
+            url: url,
+            data: url,
+            success: function(data){    
+            $.getJSON(url, function(result) {     
+            console.log(result)
+      })
+    }
+  })
+      
+      function confirm() {
+        var doc = new jsPDF({
+          orientation: "portrait",
+          unit: "cm",
+          format: [8,5],
+        });
+        // var imgData = 'data:image/png;base64,'+ btoa('../../img/logo.png');
+        // doc.addImage(imgData, 'png', 1.2, .2, 100, 100)
+        doc.setFontSize(15)
+        doc.text('Monbus', 1.5, 1)
+        doc.setFontSize(10)
+        doc.setFont('Lato-Regular', 'normal');
+        doc.text('COMPROVANTE', 1.1, 1.5)
+        doc.text(`Nome: ${user}`, .3, 2.3)
+        doc.text(`CPF: ${cpf}`, .3, 2.8)
+        doc.text('ORIGEM', 1.65, 3.5)
+        doc.text(`${document.querySelector("#origem").innerHTML}`, .3, 4);
+        doc.text('DESTINO', 1.6, 4.5)
+        doc.text(`${document.querySelector("#destino").innerHTML}`,.3, 5);
+        doc.text(`Horário: ${document.querySelector("#horario").innerHTML}`,.3, 5.5);
+        doc.text(`Placa: ${document.querySelector("#onibus").innerHTML}`,.3, 6);
+        doc.text(`Assento: ${document.querySelector("#poltrona").innerHTML}`,.3, 6.5);
+        doc.text(`Preço: R$${document.querySelector("#preco").innerHTML}`,.3, 7);
+        doc.save("ticket.pdf");
+        return false;
+      }
+    </script>
+  </body>
+</html>
